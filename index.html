@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nas Maks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #4a90e2 100%);
+            background-image: url('images/main.jpg');
+            background-size: 140%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            position: relative;
+            image-rendering: high-quality;
+            image-rendering: -webkit-optimize-contrast;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            will-change: background-image;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            filter: contrast(1.2) brightness(1.05) saturate(1.15);
+            -webkit-filter: contrast(1.2) brightness(1.05) saturate(1.15);
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(30, 60, 114, 0.2);
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            margin-top: calc(5vh - 10vh * 0.1);
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 5.5rem;
+            font-weight: bold;
+            color: #FF3366;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in;
+            padding: 30px 50px;
+            border-radius: 15px;
+            display: inline-block;
+            position: relative;
+            border: 3px solid transparent;
+            animation: fadeIn 1s ease-in, borderPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 51, 102, 0.5),
+                            0 0 20px rgba(255, 51, 102, 0.3),
+                            0 0 30px rgba(255, 51, 102, 0.2),
+                            inset 0 0 10px rgba(255, 51, 102, 0.1);
+                border-color: rgba(255, 51, 102, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 51, 102, 0.8),
+                            0 0 40px rgba(255, 51, 102, 0.6),
+                            0 0 60px rgba(255, 51, 102, 0.4),
+                            inset 0 0 20px rgba(255, 51, 102, 0.2);
+                border-color: rgba(255, 51, 102, 1);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(255, 51, 102, 0.5),
+                            0 0 20px rgba(255, 51, 102, 0.3),
+                            0 0 30px rgba(255, 51, 102, 0.2),
+                            inset 0 0 10px rgba(255, 51, 102, 0.1);
+                border-color: rgba(255, 51, 102, 0.8);
+            }
+        }
+
+        @keyframes shortcutBorderPulse {
+            0% {
+                box-shadow: 0 0 8px rgba(139, 115, 85, 0.5),
+                            0 0 16px rgba(139, 115, 85, 0.3),
+                            0 0 24px rgba(139, 115, 85, 0.2),
+                            inset 0 0 8px rgba(139, 115, 85, 0.1);
+                border-color: rgba(139, 115, 85, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(139, 115, 85, 0.8),
+                            0 0 32px rgba(139, 115, 85, 0.6),
+                            0 0 48px rgba(139, 115, 85, 0.4),
+                            inset 0 0 16px rgba(139, 115, 85, 0.2);
+                border-color: rgba(139, 115, 85, 1);
+            }
+            100% {
+                box-shadow: 0 0 8px rgba(139, 115, 85, 0.5),
+                            0 0 16px rgba(139, 115, 85, 0.3),
+                            0 0 24px rgba(139, 115, 85, 0.2),
+                            inset 0 0 8px rgba(139, 115, 85, 0.1);
+                border-color: rgba(139, 115, 85, 0.8);
+            }
+        }
+
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+                padding: 20px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+                padding: 15px 25px;
+            }
+        }
+
+        .shortcut {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #FF3366;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 2px solid transparent;
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+
+        .shortcut:nth-child(1) {
+            top: 20px;
+        }
+
+        .shortcut:nth-child(2) {
+            top: 80px;
+        }
+
+        .shortcut:nth-child(3) {
+            top: 140px;
+        }
+
+        .shortcut:hover {
+            background-color: #E62E5C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .shortcut:active {
+            transform: translateY(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            color: #333;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+
+        #birthModal .modal-content {
+            background-color: rgba(255, 255, 255, 0.95);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="cake" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="%23FFD700"/><stop offset="50%" stop-color="%23FFA500"/><stop offset="100%" stop-color="%23FF8C00"/></linearGradient><radialGradient id="flame"><stop offset="0%" stop-color="%23FFD700"/><stop offset="50%" stop-color="%23FF8C00"/><stop offset="100%" stop-color="%23FF4500"/></radialGradient></defs><rect x="40" y="100" width="120" height="60" fill="url(%23cake)" rx="8" ry="8"/><rect x="50" y="110" width="100" height="40" fill="%23FFF" opacity="0.9"/><ellipse cx="100" cy="100" rx="30" ry="25" fill="%23FFD700"/><ellipse cx="100" cy="100" rx="25" ry="20" fill="%23FFA500"/><line x1="100" y1="70" x2="100" y2="85" stroke="%23FFD700" stroke-width="2"/><circle cx="100" cy="60" r="5" fill="url(%23flame)"/><ellipse cx="100" cy="58" rx="3" ry="6" fill="%23FFD700" opacity="0.8"/><ellipse cx="100" cy="58" rx="2" ry="4" fill="%23FFF" opacity="0.9"/></svg>');
+            background-size: 250px 250px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: #FF3366;
+        }
+
+        #birthModal .modal-content h2 {
+            color: #FF3366;
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+            border: 3px solid transparent;
+            animation: borderPulse 2s ease-in-out infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        #birthModal .modal-content p,
+        #birthModal .modal-content strong {
+            color: #FF3366;
+        }
+
+        #birthModal .modal-content .close {
+            color: #FF3366;
+        }
+
+        #birthModal .modal-content .close:hover {
+            color: #E62E5C;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: #1e3c72;
+            font-size: 2rem;
+        }
+
+        .modal-content p {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .birth-info {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border: 2px solid rgba(255, 51, 102, 0.3);
+        }
+
+        .birth-photo {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-content {
+            background-color: white;
+            color: #333;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .placeholder {
+            color: #999;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        .videos-content {
+            background-color: white;
+            color: #333;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .video-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            border-radius: 8px;
+            background-color: #000;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: auto;
+        }
+
+        .video-item .placeholder {
+            color: #999;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .name-tag {
+            position: fixed;
+            background-color: #FF3366;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: 2px solid transparent;
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+
+        .name-tag.left {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .name-tag.right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .name-tag {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+        }
+
+        /* 3D Ljubičasta Srca */
+        .heart-3d {
+            position: fixed;
+            width: 30px;
+            height: 28px;
+            z-index: 10;
+            pointer-events: none;
+            transform-style: preserve-3d;
+            perspective: 100px;
+        }
+
+        .heart-3d::before,
+        .heart-3d::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 28px;
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 50%, #9932CC 100%);
+            border-radius: 18px 18px 0 0;
+            transform-origin: 50% 100%;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.9),
+                        0 0 30px rgba(147, 112, 219, 0.7),
+                        0 0 45px rgba(153, 50, 204, 0.5),
+                        inset 0 0 15px rgba(186, 85, 211, 0.5),
+                        inset -2px -2px 5px rgba(138, 43, 226, 0.3);
+        }
+
+        .heart-3d::before {
+            left: 6px;
+            transform: rotate(-45deg);
+        }
+
+        .heart-3d::after {
+            right: 6px;
+            transform: rotate(45deg);
+        }
+
+        .heart-3d .heart-core {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, #BA55D3 40%, #8A2BE2 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 1),
+                        0 0 20px rgba(147, 112, 219, 0.9),
+                        0 0 30px rgba(186, 85, 211, 0.7),
+                        inset -2px -2px 5px rgba(138, 43, 226, 0.6),
+                        inset 2px 2px 5px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes heartGlow {
+            0%, 100% {
+                opacity: 0.7;
+                filter: brightness(1) drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+            }
+            25% {
+                opacity: 1;
+                filter: brightness(1.4) drop-shadow(0 0 15px rgba(138, 43, 226, 1)) drop-shadow(0 0 25px rgba(147, 112, 219, 0.8));
+            }
+            50% {
+                opacity: 0.85;
+                filter: brightness(1.2) drop-shadow(0 0 18px rgba(147, 112, 219, 1)) drop-shadow(0 0 30px rgba(186, 85, 211, 0.9));
+            }
+            75% {
+                opacity: 1;
+                filter: brightness(1.4) drop-shadow(0 0 15px rgba(138, 43, 226, 1)) drop-shadow(0 0 25px rgba(153, 50, 204, 0.8));
+            }
+        }
+
+        @keyframes heartFloat {
+            0%, 100% {
+                transform: translateY(0) rotateZ(0deg) scale(var(--heart-scale, 1));
+            }
+            50% {
+                transform: translateY(-20px) rotateZ(180deg) scale(var(--heart-scale, 1));
+            }
+        }
+
+        .heart-3d {
+            animation: heartGlow 2.5s ease-in-out infinite, heartFloat 5s ease-in-out infinite;
+            will-change: transform, opacity, filter;
+            --heart-scale: 1;
+        }
+
+        .heart-3d:nth-child(2n) {
+            animation-delay: 0.5s;
+        }
+
+        .heart-3d:nth-child(3n) {
+            animation-delay: 1s;
+        }
+
+        .heart-3d:nth-child(4n) {
+            animation-delay: 1.5s;
+        }
+
+        .heart-3d:nth-child(5n) {
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="shortcut" onclick="openModal()">Rodjen</div>
+    <div class="shortcut" onclick="openGallery()">Galerija</div>
+    <div class="shortcut" onclick="openAdventures()">Nasi Dozivljaji</div>
+    
+    <div class="name-tag left">Tatjana Kacavenda</div>
+    <div class="name-tag right">Lazar Mihajlov</div>
+    
+    <div class="container">
+        <h1>Nas Maks</h1>
+    </div>
+
+    <div id="birthModal" class="modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Podaci Rodjenja</h2>
+            <div class="birth-info">
+                <p><strong>Datum:</strong> 07.07.2019</p>
+                <p><strong>Mesto:</strong> Novi Sad</p>
+                <p><strong>Vlasnici:</strong> Lazar i Tanja</p>
+                <img id="birthImage" class="birth-photo" src="images/birth.jpg" alt="Maks - Rodjen 07.07.2019" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <div id="galleryModal" class="modal" onclick="closeGalleryOnBackdrop(event)">
+        <div class="gallery-content">
+            <span class="close" onclick="closeGallery()">&times;</span>
+            <h2>Galerija - Maks</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 1</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 2</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 3</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 4</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 5</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder">Fotografija 6</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="videosModal" class="modal" onclick="closeVideosModalOnBackdrop(event)">
+        <div class="videos-content">
+            <span class="close" onclick="closeVideosModal()">&times;</span>
+            <h2>Nasi Dozivljaji</h2>
+            <div class="video-grid">
+                <div class="video-item">
+                    <video controls preload="metadata" playsinline webkit-playsinline>
+                        <source src="videos/maks1.mp4" type="video/mp4">
+                        Vaš pretraživač ne podržava HTML5 video.
+                    </video>
+                </div>
+                <div class="video-item">
+                    <video controls preload="metadata" playsinline webkit-playsinline>
+                        <source src="videos/maks2.mp4" type="video/mp4">
+                        Vaš pretraživač ne podržava HTML5 video.
+                    </video>
+                </div>
+                <div class="video-item">
+                    <video controls preload="metadata" playsinline webkit-playsinline>
+                        <source src="videos/maks3.mp4" type="video/mp4">
+                        Vaš pretraživač ne podržava HTML5 video.
+                    </video>
+                </div>
+                <div class="video-item">
+                    <div class="placeholder">Video 4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('birthModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('birthModal').classList.remove('active');
+        }
+
+        function closeModalOnBackdrop(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        }
+
+        function openGallery() {
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function closeGalleryOnBackdrop(event) {
+            if (event.target.classList.contains('modal')) {
+                closeGallery();
+            }
+        }
+
+        function openAdventures() {
+            document.getElementById('videosModal').classList.add('active');
+        }
+
+        function closeVideosModal() {
+            document.getElementById('videosModal').classList.remove('active');
+        }
+
+        function closeVideosModalOnBackdrop(event) {
+            if (event.target.classList.contains('modal')) {
+                closeVideosModal();
+            }
+        }
+
+        // Zatvaranje modala sa ESC tipkom
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeGallery();
+                closeVideosModal();
+            }
+        });
+
+        // Error handling za video elemente
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('.video-item video');
+            videos.forEach(function(video) {
+                video.addEventListener('error', function(e) {
+                    console.error('Greška pri učitavanju videa:', video.querySelector('source').src);
+                    const videoItem = video.closest('.video-item');
+                    if (videoItem) {
+                        videoItem.innerHTML = '<div class="placeholder">Video se ne može učitati. Proverite putanju fajla.</div>';
+                    }
+                });
+                
+                video.addEventListener('loadedmetadata', function() {
+                    console.log('Video metadata uspešno učitana:', video.querySelector('source').src);
+                });
+            });
+
+            // Kreiranje 3D ljubičastih srca razbacanih po stranici
+            function createHearts() {
+                const numberOfHearts = 15; // Broj srca
+                const body = document.body;
+                
+                for (let i = 0; i < numberOfHearts; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-3d';
+                    
+                    // Dodaj heart-core element
+                    const heartCore = document.createElement('div');
+                    heartCore.className = 'heart-core';
+                    heart.appendChild(heartCore);
+                    
+                    // Nasumična pozicija po celoj stranici
+                    const randomX = Math.random() * (window.innerWidth - 50);
+                    const randomY = Math.random() * (window.innerHeight - 50);
+                    
+                    heart.style.left = randomX + 'px';
+                    heart.style.top = randomY + 'px';
+                    
+                    // Nasumičan delay za animaciju
+                    const randomDelay = Math.random() * 2;
+                    heart.style.animationDelay = randomDelay + 's';
+                    
+                    // Nasumična veličina (mala varijacija)
+                    const randomScale = 0.8 + Math.random() * 0.4;
+                    heart.style.setProperty('--heart-scale', randomScale);
+                    
+                    body.appendChild(heart);
+                }
+            }
+
+            createHearts();
+            
+            // Podesi pozicije srca pri promeni veličine prozora
+            window.addEventListener('resize', function() {
+                const hearts = document.querySelectorAll('.heart-3d');
+                hearts.forEach(function(heart) {
+                    const randomX = Math.random() * (window.innerWidth - 50);
+                    const randomY = Math.random() * (window.innerHeight - 50);
+                    heart.style.left = randomX + 'px';
+                    heart.style.top = randomY + 'px';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
